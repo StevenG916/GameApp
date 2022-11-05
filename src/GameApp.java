@@ -1,3 +1,4 @@
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -15,6 +16,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 
@@ -29,12 +33,20 @@ public class GameApp extends Application {
     public void start(Stage stage) throws Exception {
 
         Group root = new Group();
-        init();
+        init(root);
         Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
         stage.setTitle("RainMaker!");
         stage.setScene(scene);
         root.setScaleY(-1);
-        stage.show();
+
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+
+            }
+        };
+
+
 
         scene.setOnKeyPressed((new EventHandler<KeyEvent>() {
             @Override
@@ -55,9 +67,17 @@ public class GameApp extends Application {
 
                 }
             }
+
         }));
+        stage.show();
+        timer.start();
 
     }
+
+    private void init(Group root) {
+        //root.getChildren().add(); This is where to add them, just have to make them first.
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -69,6 +89,45 @@ class Game extends Pane{
 
 }
 abstract class GameObject extends Group implements Updatable {
+    protected Translate myTranslation;
+    protected Rotate myRotation;
+    protected Scale myScale;
+
+    public GameObject(){
+        myTranslation = new Translate();
+        myRotation = new Rotate();
+        myScale = new Scale();
+        this.getTransforms().addAll(myTranslation,myRotation,myScale);
+    }
+
+    public void rotate(double degrees) {
+        myRotation.setAngle(degrees);
+        myRotation.setPivotX(0);
+        myRotation.setPivotY(0);
+    }
+
+    public void scale(double sx, double sy) {
+        myScale.setX(sx);
+        myScale.setY(sy);
+    }
+
+    public void translate(double tx, double ty) {
+        myTranslation.setX(tx);
+        myTranslation.setY(ty);
+    }
+
+    public double getMyRotation(){
+        return myRotation.getAngle();
+    }
+
+    public void update(){
+        for(Node n : getChildren()){
+            if(n instanceof Updatable)
+                ((Updatable)n).update();
+        }
+    }
+
+
     void add (Node node) {
         this.getChildren().add(node);
 
