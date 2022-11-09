@@ -32,7 +32,6 @@ public class GameApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-
         Group root = new Group();
         Game game = new Game();
         root.setScaleY(-1);
@@ -81,7 +80,7 @@ public class GameApp extends Application {
     }
 
     private void init(Group root) {
-        //root.getChildren().add(); //This is where to add them, just have to make them first.
+        //root.getChildren().add(root); //This is where to add them, just have to make them first.
     }
 
     public static void main(String[] args) {
@@ -94,11 +93,11 @@ class Game extends Pane {
 
     public Game() {
         Helipad helipad = new Helipad();
-        Helicopter helicopter = new Helicopter();
+        //Helicopter helicopter = new Helicopter();
         Pond pond = new Pond();
-        Cloud cloud = new Cloud();
+        //Cloud cloud = new Cloud();
 
-        getChildren().addAll(helipad, helicopter, pond, cloud);
+        getChildren().addAll(pond,helipad);
 
 
     }
@@ -159,9 +158,11 @@ class Pond extends GameObject implements Updatable{
         add(ellipse);
         double randX = rand.nextDouble();
         double randY = rand.nextDouble();
-        ellipse.setTranslateX(randX*50);
-        ellipse.setTranslateY(randY*50);
-        translate(100,100  );
+        //ellipse.setTranslateX(randX*50);
+        //ellipse.setTranslateY(randY*50);
+        //ellipse.setTranslateX(100);
+        //ellipse.setTranslateY(500);
+        translate(200,400  );
 
 
 
