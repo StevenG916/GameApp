@@ -29,14 +29,21 @@ public class GameApp extends Application {
     private static final int GAME_WIDTH = 400;
     private static final int GAME_HEIGHT = 800;
 
+
     @Override
     public void start(Stage stage) throws Exception {
 
+        System.out.println(" test 1 ");
+
+
         Group root = new Group();
-        Game game = new Game();
         root.setScaleY(-1);
-        init(root);
+        System.out.println(" test scale on y should be inverted here in start ");
+        Game game = new Game();
+
+
         root.getChildren().add(game);
+        init(root);
         Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
         stage.setTitle("RainMaker!");
         stage.setScene(scene);
@@ -47,6 +54,13 @@ public class GameApp extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+
+                double iterations = now;
+                if (iterations%10000==0) {
+                    System.out.println(" test Animation " + iterations);
+                } else {
+                    return;
+                }
 
             }
         };
@@ -81,6 +95,7 @@ public class GameApp extends Application {
 
     private void init(Group root) {
         //root.getChildren().add(root); //This is where to add them, just have to make them first.
+        System.out.println(" test init ");
     }
 
     public static void main(String[] args) {
@@ -92,6 +107,7 @@ public class GameApp extends Application {
 class Game extends Pane {
 
     public Game() {
+        System.out.println(" test Game ");
         Helipad helipad = new Helipad();
         //Helicopter helicopter = new Helicopter();
         Pond pond = new Pond();
@@ -151,6 +167,7 @@ abstract class GameObject extends Group implements Updatable {
 }
 class Pond extends GameObject implements Updatable{
     public Pond() {
+        System.out.println(" test pond ");
         double r = Math.random() * 40 + 30;
         Ellipse ellipse = new Ellipse(r, r*1.5);
         Random rand = new Random();
@@ -170,6 +187,7 @@ class Pond extends GameObject implements Updatable{
 
     @Override
     public void update() {
+        System.out.println(" test Pond UPDATE ");
 
     }
 }
@@ -183,6 +201,7 @@ class Cloud extends GameObject{
 class Helipad extends GameObject{
 
     public Helipad() {
+        System.out.println(" test Helipad ");
 
         Circle circle = new Circle(47.5);
         Rectangle rectangle = new Rectangle(100, 100);
