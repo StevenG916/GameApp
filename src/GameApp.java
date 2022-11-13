@@ -36,7 +36,7 @@ public class GameApp extends Application {
         System.out.println(" test 1 ");
 
 
-        Group root = new Group();
+        Pane root = new Pane();
         root.setScaleY(-1);
         System.out.println(" test scale on y should be inverted here in start ");
         Game game = new Game();
@@ -93,7 +93,7 @@ public class GameApp extends Application {
 
     }
 
-    private void init(Group root) {
+    private void init(Pane root) {
         //root.getChildren().add(root); //This is where to add them, just have to make them first.
         System.out.println(" test init ");
     }
