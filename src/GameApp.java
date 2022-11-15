@@ -1,6 +1,7 @@
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -10,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -109,11 +111,11 @@ class Game extends Pane {
     public Game() {
         System.out.println(" test Game ");
         Helipad helipad = new Helipad();
-        //Helicopter helicopter = new Helicopter();
+        Helicopter helicopter = new Helicopter();
         Pond pond = new Pond();
         //Cloud cloud = new Cloud();
 
-        getChildren().addAll(pond,helipad);
+        getChildren().addAll(pond,helipad, helicopter);
 
 
     }
@@ -213,12 +215,28 @@ class Helipad extends GameObject{
         add(circle);
         circle.setTranslateX(50);
         circle.setTranslateY(50);
-        translate(150, 20);
+        translate(150, 10);
     }
 
 }
 class Helicopter extends GameObject implements Updatable {
 
+    Color helicopter = Color.YELLOW;
+    int heliX = 200;
+    int heliY = 55;
+    Point2D helicopterStartingPoint = new Point2D(heliX, heliY);
+
+    public Helicopter() {
+        Ellipse body = new Ellipse(15,15);
+        Line nose = new Line(0,0,0,30);
+        body.setFill(helicopter);
+        nose.setStroke(helicopter);
+        add(body);
+        add(nose);
+        translate(helicopterStartingPoint.getX(), helicopterStartingPoint.getY());
+
+
+    }
 }
 
 class GameText extends GameObject implements Updatable {
