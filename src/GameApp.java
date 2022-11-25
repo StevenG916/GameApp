@@ -20,6 +20,7 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.util.Random;
 
 
@@ -46,7 +47,7 @@ public class GameApp extends Application {
 
         root.getChildren().add(game);
         init(root);
-        Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT);
+        Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.FORESTGREEN);
         stage.setTitle("RainMaker!");
         stage.setScene(scene);
 
@@ -69,31 +70,34 @@ public class GameApp extends Application {
 
 
 
-        scene.setOnKeyPressed((new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.LEFT){
+        scene.setOnKeyPressed((event -> {
 
-                }
-                if (event.getCode() == KeyCode.RIGHT){
+            if (event.getCode() == KeyCode.LEFT){
+                game.rotateHelicopterLeft();
 
-                }
-                if (event.getCode() == KeyCode.UP){
-
-                }
-                if (event.getCode() == KeyCode.DOWN){
-
-                }
-                if (event.getCode() == KeyCode.I){
-
-                }
             }
+            if (event.getCode() == KeyCode.RIGHT){
+                game.rotateHelicopterRight();
 
+            }
+            if (event.getCode() == KeyCode.UP){
+                game.increaseHelicopterVelocity();
+
+            }
+            if (event.getCode() == KeyCode.DOWN){
+                game.decreaseHelicopterVelocity();
+
+            }
+            if (event.getCode() == KeyCode.I){
+
+            }
         }));
 
         timer.start();
 
     }
+
+
 
     private void init(Pane root) {
         //root.getChildren().add(root); //This is where to add them, just have to make them first.
@@ -108,17 +112,36 @@ public class GameApp extends Application {
 
 class Game extends Pane {
 
+    Helipad helipad = new Helipad();
+    Helicopter helicopter = new Helicopter();
+    Pond pond = new Pond();
+    Cloud cloud = new Cloud();
+
     public Game() {
         System.out.println(" test Game ");
-        Helipad helipad = new Helipad();
-        Helicopter helicopter = new Helicopter();
-        Pond pond = new Pond();
-        //Cloud cloud = new Cloud();
 
-        getChildren().addAll(pond,helipad, helicopter);
+
+        getChildren().addAll(pond,helipad, helicopter, cloud);
 
 
     }
+    public double HelicopterVelocity(){
+        return helicopter.velocity();
+
+    }
+    public void rotateHelicopterLeft(){
+        helicopter.turnLeft();
+    }
+    public void rotateHelicopterRight(){
+        helicopter.turnRight();
+    }
+    public void increaseHelicopterVelocity(){
+        helicopter.increaseVelocity();
+    }
+    public void decreaseHelicopterVelocity(){
+        helicopter.decreaseVelocity();
+    }
+
 
 
 }
@@ -195,6 +218,15 @@ class Pond extends GameObject implements Updatable{
 }
 class Cloud extends GameObject{
 
+    public Cloud() {
+        Ellipse cloud = new Ellipse(50,50);
+        cloud.setFill(Color.WHITE);
+        add(cloud);
+        translate(50,50);
+
+
+    }
+
     @Override
     public void update() {
 
@@ -225,6 +257,9 @@ class Helicopter extends GameObject implements Updatable {
     int heliX = 200;
     int heliY = 55;
     Point2D helicopterStartingPoint = new Point2D(heliX, heliY);
+    private double velocity;
+    private Point2D direction;
+    //private int rotation;
 
     public Helicopter() {
         Ellipse body = new Ellipse(15,15);
@@ -237,6 +272,30 @@ class Helicopter extends GameObject implements Updatable {
 
 
     }
+    public double velocity(){
+        return velocity;
+    }
+    public void turnLeft(){
+        rotate(15+getMyRotation());
+    }
+    public void turnRight(){
+        rotate(-15+getMyRotation());
+    }
+    public void increaseVelocity(){
+        velocity+=0.1;
+
+    }
+    public void decreaseVelocity(){
+        velocity -= 0.1;
+
+    }
+    public void update(){
+        setRotate(getMyRotation());
+        direction = direction.add(velocity * Math.sin(-1*Math.PI*getMyRotation()/180), velocity *
+                Math.cos(-1*Math.PI*getMyRotation()/180));
+        translate(direction.getX(), direction.getY());
+    }
+
 }
 
 class GameText extends GameObject implements Updatable {
