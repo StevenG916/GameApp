@@ -102,10 +102,10 @@ public class GameApp extends Application {
 
     }
 
-    private void init(Pane root) {
-        root.getChildren().clear();
+    private void init(Pane parent) {
+        parent.getChildren().clear();
 
-        root.getChildren().addAll(pond,helipad, helicopter, cloud); //This is where to add them, just have to make them first.
+        parent.getChildren().addAll(pond,helipad, helicopter, cloud); //This is where to add them, just have to make them first.
         System.out.println(" test init ");
     }
 
@@ -127,7 +127,7 @@ class Game extends Pane implements Updatable{
         System.out.println(" test Game ");
 
 
-        getChildren().addAll(pond,helipad, helicopter, cloud);
+       getChildren().addAll(pond,helipad, helicopter, cloud);
 
 
     }
