@@ -1,12 +1,10 @@
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -20,17 +18,21 @@ import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.util.Random;
 
 
 interface Updatable{
+
     void update();
 }
 
 public class GameApp extends Application {
     private static final int GAME_WIDTH = 400;
     private static final int GAME_HEIGHT = 800;
+    Helipad helipad = new Helipad();
+    Helicopter helicopter = new Helicopter();
+    Pond pond = new Pond();
+    Cloud cloud = new Cloud();
 
 
     @Override
@@ -46,7 +48,7 @@ public class GameApp extends Application {
 
 
         root.getChildren().add(game);
-        init(root);
+        //init(root);
         Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.FORESTGREEN);
         stage.setTitle("RainMaker!");
         stage.setScene(scene);
@@ -54,11 +56,13 @@ public class GameApp extends Application {
         stage.show();
 
 
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
 
                 double iterations = now;
+                game.update();
                 if (iterations%10000==0) {
                     System.out.println(" test Animation " + iterations);
                 } else {
@@ -95,12 +99,13 @@ public class GameApp extends Application {
 
         timer.start();
 
+
     }
 
-
-
     private void init(Pane root) {
-        //root.getChildren().add(root); //This is where to add them, just have to make them first.
+        root.getChildren().clear();
+
+        root.getChildren().addAll(pond,helipad, helicopter, cloud); //This is where to add them, just have to make them first.
         System.out.println(" test init ");
     }
 
@@ -110,12 +115,13 @@ public class GameApp extends Application {
 } // end of class GameApp
 
 
-class Game extends Pane {
+class Game extends Pane implements Updatable{
 
     Helipad helipad = new Helipad();
     Helicopter helicopter = new Helicopter();
     Pond pond = new Pond();
     Cloud cloud = new Cloud();
+
 
     public Game() {
         System.out.println(" test Game ");
@@ -137,15 +143,28 @@ class Game extends Pane {
     }
     public void increaseHelicopterVelocity(){
         helicopter.increaseVelocity();
+
     }
     public void decreaseHelicopterVelocity(){
         helicopter.decreaseVelocity();
     }
 
+    @Override
+    public void update() {
+        for(Node n : getChildren()) {
+            if (n instanceof Updatable) {
+                ((Updatable) n).update();
+            }
+        }
+    }
+
+
 
 
 }
 abstract class GameObject extends Group implements Updatable {
+
+
     protected Translate myTranslation;
     protected Rotate myRotation;
     protected Scale myScale;
@@ -178,6 +197,7 @@ abstract class GameObject extends Group implements Updatable {
     }
 
     public void update(){
+        System.out.println("starting update loop in Game Object");
         for(Node n : getChildren()){
             if(n instanceof Updatable)
                 ((Updatable)n).update();
@@ -253,22 +273,22 @@ class Helipad extends GameObject{
 }
 class Helicopter extends GameObject implements Updatable {
 
-    Color helicopter = Color.YELLOW;
+    //Color helicopter = Color.YELLOW;
     int heliX = 200;
     int heliY = 55;
-    Point2D helicopterStartingPoint = new Point2D(heliX, heliY);
+    Point2D helicopterPoint = new Point2D(heliX, heliY);
     private double velocity;
-    private Point2D direction;
+    //private Point2D helicopterPoint;
     //private int rotation;
 
     public Helicopter() {
         Ellipse body = new Ellipse(15,15);
         Line nose = new Line(0,0,0,30);
-        body.setFill(helicopter);
-        nose.setStroke(helicopter);
+        body.setFill(Color.YELLOW);
+        nose.setStroke(Color.YELLOW);
         add(body);
         add(nose);
-        translate(helicopterStartingPoint.getX(), helicopterStartingPoint.getY());
+        translate(helicopterPoint.getX(), helicopterPoint.getY());
 
 
     }
@@ -277,23 +297,34 @@ class Helicopter extends GameObject implements Updatable {
     }
     public void turnLeft(){
         rotate(15+getMyRotation());
+        System.out.println(getMyRotation());
     }
     public void turnRight(){
         rotate(-15+getMyRotation());
+        System.out.println(getMyRotation());
     }
     public void increaseVelocity(){
-        velocity+=0.1;
+
+        velocity += 0.1;
+        System.out.println(velocity());
 
     }
     public void decreaseVelocity(){
         velocity -= 0.1;
+        System.out.println(velocity());
 
     }
+    @Override
     public void update(){
-        setRotate(getMyRotation());
-        direction = direction.add(velocity * Math.sin(-1*Math.PI*getMyRotation()/180), velocity *
+        //setRotate(getMyRotation());
+        System.out.println("Helicopter Update Method");
+        System.out.println(getMyRotation());
+        System.out.println(velocity());
+        helicopterPoint = helicopterPoint.add(velocity * Math.sin(-1*Math.PI*getMyRotation()/180), velocity *
                 Math.cos(-1*Math.PI*getMyRotation()/180));
-        translate(direction.getX(), direction.getY());
+        translate(helicopterPoint.getX(), helicopterPoint.getY());
+        System.out.println(helicopterPoint.getX() +" " + helicopterPoint.getY());
+
     }
 
 }
