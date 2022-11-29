@@ -2,7 +2,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
 
 public class Helicopter extends GameObject implements Updatable {
 

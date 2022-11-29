@@ -1,24 +1,9 @@
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.geometry.Point2D;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Scale;
-import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
-
-import java.util.Random;
 
 
 public class GameApp extends Application {
@@ -26,7 +11,7 @@ public class GameApp extends Application {
     private static final int GAME_HEIGHT = 800;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
 
         System.out.println(" test 1 ");
 
