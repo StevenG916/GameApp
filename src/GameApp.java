@@ -11,7 +11,7 @@ public class GameApp extends Application {
     private static final int GAME_HEIGHT = 800;
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws Exception{
 
         System.out.println(" test 1 ");
 

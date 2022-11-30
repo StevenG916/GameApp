@@ -27,7 +27,7 @@ public class Helicopter extends GameObject implements Updatable {
 
         fuel = new GameText(fuelAmount, Color.YELLOW);
         fuel.setLayoutX(-50);
-        fuel.setLayoutY(-20);
+        fuel.setLayoutY(-50);
 
 
         add(fuel);
@@ -51,27 +51,32 @@ public class Helicopter extends GameObject implements Updatable {
     }
 
     public void increaseVelocity() {
-
-        velocity += 0.1;
-        System.out.println(velocity());
+        while (velocity < 10) {
+            velocity += 0.1;
+            System.out.println("velocity increasing");
+            break;
+        }
 
     }
 
     public void decreaseVelocity() {
-        velocity -= 0.1;
-        System.out.println(velocity());
+        while(velocity >-2) {
+            velocity -= 0.1;
+            System.out.println("velocity decreasing");
+            break;
+        }
     }
 
     @Override
     public void update() {
         //setRotate(getMyRotation());
         System.out.println("Helicopter Update Method");
-        System.out.println(getMyRotation());
-        System.out.println(velocity());
+        System.out.println("Rotation "+getMyRotation());
+        System.out.println("velocity "+velocity());
         helicopterPoint = helicopterPoint.add(velocity * Math.sin(-1 * Math.PI * getMyRotation() / 180), velocity *
                 Math.cos(-1 * Math.PI * getMyRotation() / 180));
         translate(helicopterPoint.getX(), helicopterPoint.getY());
-        System.out.println(helicopterPoint.getX() + " " + helicopterPoint.getY());
+        System.out.println("helicopter X/Y " + helicopterPoint.getX() + " " + helicopterPoint.getY());
         if(fuelAmount > 0){
             fuelAmount -= 1;
             fuel.setText(fuelAmount);
