@@ -37,9 +37,10 @@ public class GameApp extends Application {
             public void handle(long now) {
 
 
-                root.update();
-                if ((double) now % 10000 == 0)
-                    System.out.println(" test Animation " + (double) now);
+
+                if ((double) now % 10 == 0)
+                    root.update();
+                    System.out.println((double) now % 10);
 
             }
         };
