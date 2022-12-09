@@ -18,13 +18,6 @@ public class GameApp extends Application {
 
         Game root = new Game();
         root.setScaleY(-1);
-        //root.init();
-        System.out.println(" test scale on y should be inverted here in start ");
-        //GameApp.Game game = new GameApp.Game();
-
-
-        //root.getChildren().add(game);
-
         Scene scene = new Scene(root, GAME_WIDTH, GAME_HEIGHT, Color.FORESTGREEN);
         stage.setTitle("RainMaker!");
         stage.setScene(scene);
@@ -38,9 +31,12 @@ public class GameApp extends Application {
 
 
 
-                if ((double) now % 10 == 0)
+                if ((double) now % 10 == 0) {
                     root.update();
                     System.out.println((double) now % 10);
+                } else {
+                    System.out.println((double) now % 10);
+                }
 
             }
         };

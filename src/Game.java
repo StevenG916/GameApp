@@ -6,9 +6,10 @@ import javafx.scene.paint.Color;
 public class Game extends Pane implements Updatable {
 
     Helipad helipad = new Helipad();
-    Helicopter helicopter = new Helicopter();
     Pond pond = new Pond();
     Cloud cloud = new Cloud();
+    Helicopter helicopter = new Helicopter();
+
 
     public boolean isGameStatus() {
         return gameStatus;
@@ -51,9 +52,9 @@ public class Game extends Pane implements Updatable {
     }
 
     public void init() {
-        super.getChildren().clear();
+        this.getChildren().clear();
 
-        super.getChildren().setAll(pond, helipad, helicopter, cloud); //This is where to add them, just have to make them first.
+        this.getChildren().setAll(pond, helipad, cloud, helicopter); //This is where to add them, just have to make them first.
         System.out.println(" test init ");
     }
 
