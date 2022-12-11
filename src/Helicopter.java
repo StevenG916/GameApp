@@ -24,7 +24,7 @@ public class Helicopter extends GameObject implements Updatable {
         add(nose);
         //GameApp.GameText fuel;
 
-        fuel = new GameText(fuelAmount, Color.YELLOW);
+        fuel = new GameText(fuelAmount);
         fuel.setLayoutX(-50);
         fuel.setLayoutY(-50);
 
@@ -72,7 +72,7 @@ public class Helicopter extends GameObject implements Updatable {
         System.out.println("GameApp.Helicopter Update Method");
         System.out.println("Rotation " + getMyRotation());
         System.out.println("velocity " + velocity());
-        helicopterPoint = helicopterPoint.add(velocity * Math.sin(-1 * Math.PI * getMyRotation() / 180), velocity *
+        helicopterPoint = helicopterPoint.add(velocity/5 * Math.sin(-1 * Math.PI * getMyRotation() / 180), velocity/5 *
                 Math.cos(-1 * Math.PI * getMyRotation() / 180));
         translate(helicopterPoint.getX(), helicopterPoint.getY());
         System.out.println("helicopter X/Y " + helicopterPoint.getX() + " " + helicopterPoint.getY());

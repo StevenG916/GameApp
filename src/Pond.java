@@ -6,24 +6,20 @@ import java.util.Random;
 public class Pond extends GameObject implements Updatable {
 
     Random rand = new Random();
-    int randX = rand.nextInt(100,400);
-    int randY = rand.nextInt(100,800);
-    int randPondSize = rand.nextInt(20,50);
+    int randX = rand.nextInt(300);
+    int randY = rand.nextInt(500);
+    int randPondSize = rand.nextInt(5);
 
 
     public Pond() {
         System.out.println(" test pond ");
-        Ellipse pond = new Ellipse(randPondSize, randPondSize*1.25);
+        Ellipse pond = new Ellipse(randPondSize*10, randPondSize*15);
 
         pond.setFill(Color.BLUE);
 
+        pond.setTranslateX(randX+50);
+        pond.setTranslateY(randY+50);
 
-        pond.setTranslateX(randX);
-        pond.setTranslateY(randY);
-        //ellipse.setTranslateX(100);
-        //ellipse.setTranslateY(500);
-
-        //translate(200, 400);
         add(pond);
         System.out.println("Pond Location " + pond.getTranslateX() + " / " + pond.getTranslateY());
 

@@ -26,17 +26,18 @@ public class GameApp extends Application {
 
 
         AnimationTimer timer = new AnimationTimer() {
+            double old = 0;
+            double time = 0;
+            int frame = 0;
+
+
             @Override
-            public void handle(long now) {
-
-
-
-                if ((double) now % 10 == 0) {
+            public void handle(long nano) {
+                if(frame % 4 == 0) {
                     root.update();
-                    System.out.println((double) now % 10);
-                } else {
-                    System.out.println((double) now % 10);
+
                 }
+                frame++;
 
             }
         };

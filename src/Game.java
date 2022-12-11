@@ -25,13 +25,7 @@ public class Game extends Pane implements Updatable {
     public Game() {
         System.out.println(" test GameApp.Game ");
         this.setBackground(Background.fill(Color.FORESTGREEN));
-
-
-        init();
-
-
-        //getChildren().addAll(pond, helipad, helicopter, cloud);
-
+       init();
 
     }
 
